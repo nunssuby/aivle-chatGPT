@@ -11,11 +11,11 @@ if '1.1_callback' not in st.session_state:
 if '2.1' not in st.session_state:
     st.session_state['2.1'] = ''
 if '2.1_callback' not in st.session_state:
-    st.session_state['2.1_callback'] = ''
+    st.session_state['2.1_callback'] = False
 if '2.2' not in st.session_state:
     st.session_state['2.2'] = '' 
 if '2.2_callback' not in st.session_state:
-    st.session_state['2.2_callback'] = ''
+    st.session_state['2.2_callback'] = False
 if '3.1' not in st.session_state:
     st.session_state['3.1'] = '' 
 if '3.2' not in st.session_state:
@@ -71,7 +71,8 @@ def requestChatGPT(session_state_no):
     print("chatGPTRequestCount 호출 횟수 : ",st.session_state['chatGPTRequestCount'])
     print("session_state_no : ",session_state_no)
     print("content : ",content)
-    if(content):
+    callback_name = session_state_no+'_callback' 
+    if(content and st.session_state[callback_name]==False):
         print("성공했을 경우 chatGPTRequestCount  : ",st.session_state['chatGPTRequestCount'])
         st.subheader(f'chatGPT의 응답: \r\n {chatGPTResponse(content, session_state_no)}')        
 
