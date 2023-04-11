@@ -141,17 +141,17 @@ if(st.session_state['2.2'] and st.session_state['2.2_callback'] ):
 # whenInputRequestChatGPT(st.session_state['3.1'])  
 requestChatGPT('3.1')
 
-if(st.session_state['3.1'] and st.session_state['chatGPT_callback'] ): 
+if(st.session_state['3.1'] and st.session_state['3.1_callback'] ): 
     st.session_state['3.2'] = st.text_input(label="예) 하루안에 작업을 마치려고해 적절한 시간 배분을 해줘")
 
 # whenInputRequestChatGPT(st.session_state['3.2'])  
 requestChatGPT('3.2')
-if(st.session_state['3.2'] and st.session_state['chatGPT_callback'] ):    
+if(st.session_state['3.2'] and st.session_state['3.2_callback'] ):    
     st.session_state['3.3'] = st.text_input(label="예) 최종 검토와 제출 단계는 제외해줘")    
 
 # whenInputRequestChatGPT(st.session_state['3.3'])
 requestChatGPT('3.3')
-if(st.session_state['3.3'] and st.session_state['chatGPT_callback'] ):    
+if(st.session_state['3.3'] and st.session_state['3.3_callback'] ):    
     
     st.header ('4. 항목별로 자세하게 작성해 달라고 요청합니다') 
     st.text('하위 항목에 대해 자세하게 작성해다라고 요청합니다. ')
@@ -163,12 +163,12 @@ if(st.session_state['3.3'] and st.session_state['chatGPT_callback'] ):
 
 # whenInputRequestChatGPT(st.session_state['4.1'])
 requestChatGPT('4.1')
-if(st.session_state['4.1'] and st.session_state['chatGPT_callback'] ):      
+if(st.session_state['4.1'] and st.session_state['4.1_callback'] ):      
     st.session_state['4.2'] = st.text_input(label="예) '4. 사업 관리' 부문의 '3. 품질 관리 계획' 부분을 요약하고, 모든 문장들이 명사로 끝나도록, 예를 들어 ~함, ~임 이런식의 문장이 되도록 다시 작성해줘.")    
 
 # whenInputRequestChatGPT(st.session_state['4.2'])
 requestChatGPT('4.2')
-if(st.session_state['4.2'] and st.session_state['chatGPT_callback'] ):  
+if(st.session_state['4.2'] and st.session_state['4.2_callback'] ):  
     st.header ('5. 가이드라인 제시') 
     st.text('필요하면, ChatGPT에게 지식을 전달합니다.')
     st.text('중간 중간 요약하거나 리마인드 합니다. (대화가 길어지면 가끔 삼천포)')
@@ -179,13 +179,13 @@ if(st.session_state['4.2'] and st.session_state['chatGPT_callback'] ):
 
 # whenInputRequestChatGPT(st.session_state['5.1'])
 requestChatGPT('5.1')
-if(st.session_state['5.1'] and st.session_state['chatGPT_callback'] ):  
+if(st.session_state['5.1'] and st.session_state['5.1_callback'] ):  
     st.write('예시) ')
     st.text('TDD 방식을 적용하기 위해 프로젝트 초기 단계에서 각 기능의 정확한 요구사항을 정의하기 위한 구체적인 활동을 3가지 나열하고, 이 활동을 추가해서 사업 관리 부문을 다시 작성해줘')
     st.session_state['5.2'] = st.text_area(label="위 예시를 참고하여 추가 질문하세요. ")
 
 # whenInputRequestChatGPT(st.session_state['5.2'])
 requestChatGPT('5.2')
-if(st.session_state['5.2'] and st.session_state['chatGPT_callback'] ):  
+if(st.session_state['5.2'] and st.session_state['5.2_callback'] ):  
     st.header ('수고하셨습니다.')     
     st.header ('적절한 하위 부분들을 나누어 작성하고, 텍스트를 취합합니다.')  
