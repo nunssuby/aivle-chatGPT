@@ -18,18 +18,32 @@ if '2.2_callback' not in st.session_state:
     st.session_state['2.2_callback'] = False
 if '3.1' not in st.session_state:
     st.session_state['3.1'] = '' 
+if '3.1_callback' not in st.session_state:
+    st.session_state['3.1_callback'] = False    
 if '3.2' not in st.session_state:
     st.session_state['3.2'] = ''
+if '3.2_callback' not in st.session_state:
+    st.session_state['3.2_callback'] = False
 if '3.3' not in st.session_state:
-    st.session_state['3.3'] = ''      
+    st.session_state['3.3'] = '' 
+if '3.3_callback' not in st.session_state:
+    st.session_state['3.3_callback'] = False     
 if '4.1' not in st.session_state:
-    st.session_state['4.1'] = ''                   
+    st.session_state['4.1'] = ''           
+if '4.1_callback' not in st.session_state:
+    st.session_state['4.1_callback'] = False            
 if '4.2' not in st.session_state:
     st.session_state['4.2'] = '' 
+if '4.2_callback' not in st.session_state:
+    st.session_state['4.2_callback'] = False
 if '5.1' not in st.session_state:
-    st.session_state['5.1'] = ''                   
+    st.session_state['5.1'] = ''            
+if '5.1_callback' not in st.session_state:
+    st.session_state['5.1_callback'] = False           
 if '5.2' not in st.session_state:
     st.session_state['5.2'] = '' 
+if '5.2_callback' not in st.session_state:
+    st.session_state['5.2_callback'] = False
 if 'chatGPTCount' not in st.session_state:
     st.session_state['chatGPTCount'] = 0     
 if 'chatGPTRequestCount' not in st.session_state:
@@ -116,7 +130,7 @@ if(st.session_state['2.1'] and st.session_state['2.1_callback'] ):
     st.markdown(f"#### [링크의 목차를 참고하여 작성해보세요](https://financedata.notion.site/4c2e5df6e02942f1bdd11d92ed24e36f)") 
     st.session_state['2.2'] = st.text_area(label="목차를 넣어보세요")
 
-whenInputRequestChatGPT(st.session_state['2.2'])  
+requestChatGPT('2.2')  
 
 if(st.session_state['2.2'] and st.session_state['2.2_callback'] ):
     print("2.2 and chatGPT_callback : " ) 
@@ -124,18 +138,19 @@ if(st.session_state['2.2'] and st.session_state['2.2_callback'] ):
     st.text('진행의 방법과 단계를 질문하고, 가능한 자원(인력) 혹은 시간제한 등을 설명합니다.')
     st.session_state['3.1'] = st.text_input(label="예) 제안서 작성작업을 어떤 수순으로 진행하면 좋을지 단계별로 설명해줘. 나를 포함해서 3명이 작업을 할 예정이야.")
 
-whenInputRequestChatGPT(st.session_state['3.1'])  
+# whenInputRequestChatGPT(st.session_state['3.1'])  
+requestChatGPT('3.1')
 
 if(st.session_state['3.1'] and st.session_state['chatGPT_callback'] ): 
     st.session_state['3.2'] = st.text_input(label="예) 하루안에 작업을 마치려고해 적절한 시간 배분을 해줘")
 
-whenInputRequestChatGPT(st.session_state['3.2'])  
-
+# whenInputRequestChatGPT(st.session_state['3.2'])  
+requestChatGPT('3.2')
 if(st.session_state['3.2'] and st.session_state['chatGPT_callback'] ):    
     st.session_state['3.3'] = st.text_input(label="예) 최종 검토와 제출 단계는 제외해줘")    
 
-whenInputRequestChatGPT(st.session_state['3.3'])
-
+# whenInputRequestChatGPT(st.session_state['3.3'])
+requestChatGPT('3.3')
 if(st.session_state['3.3'] and st.session_state['chatGPT_callback'] ):    
     
     st.header ('4. 항목별로 자세하게 작성해 달라고 요청합니다') 
@@ -146,11 +161,13 @@ if(st.session_state['3.3'] and st.session_state['chatGPT_callback'] ):
     st.text("다음을 작성해줘 \n 4. 사업 관리 부문 \n\t a. 프로젝트 수행 방법론 \n\t b. 프로젝트 관리 방안 \n\t c. 품질 관리 계획")
     st.session_state['4.1'] = st.text_area(label="하위 항목을 자세하게 해달라고 요청합니다.예시참고 ")
 
-whenInputRequestChatGPT(st.session_state['4.1'])
+# whenInputRequestChatGPT(st.session_state['4.1'])
+requestChatGPT('4.1')
 if(st.session_state['4.1'] and st.session_state['chatGPT_callback'] ):      
     st.session_state['4.2'] = st.text_input(label="예) '4. 사업 관리' 부문의 '3. 품질 관리 계획' 부분을 요약하고, 모든 문장들이 명사로 끝나도록, 예를 들어 ~함, ~임 이런식의 문장이 되도록 다시 작성해줘.")    
 
-whenInputRequestChatGPT(st.session_state['4.2'])
+# whenInputRequestChatGPT(st.session_state['4.2'])
+requestChatGPT('4.2')
 if(st.session_state['4.2'] and st.session_state['chatGPT_callback'] ):  
     st.header ('5. 가이드라인 제시') 
     st.text('필요하면, ChatGPT에게 지식을 전달합니다.')
@@ -160,13 +177,15 @@ if(st.session_state['4.2'] and st.session_state['chatGPT_callback'] ):
     st.text('사업 관리 부문 의 품질 관리 계획 부분에서 테스트 주도 개발(TDD) 방식을 적용하여 품질 관리를 강화한다고 언급을 했는데, \n 테스트 주도 개발(TDD) 방식이 어떻게 품질 관리를 강화에 도움이 되는지에대한 설명을 추가해서 품질 관리 계획 부분만 다시 작성해줘.')
     st.session_state['5.1'] = st.text_area(label="위 예시를 참고하여 질문하세요. ")
 
-whenInputRequestChatGPT(st.session_state['5.1'])
+# whenInputRequestChatGPT(st.session_state['5.1'])
+requestChatGPT('5.1')
 if(st.session_state['5.1'] and st.session_state['chatGPT_callback'] ):  
     st.write('예시) ')
     st.text('TDD 방식을 적용하기 위해 프로젝트 초기 단계에서 각 기능의 정확한 요구사항을 정의하기 위한 구체적인 활동을 3가지 나열하고, 이 활동을 추가해서 사업 관리 부문을 다시 작성해줘')
     st.session_state['5.2'] = st.text_area(label="위 예시를 참고하여 추가 질문하세요. ")
 
-whenInputRequestChatGPT(st.session_state['5.2'])
+# whenInputRequestChatGPT(st.session_state['5.2'])
+requestChatGPT('5.2')
 if(st.session_state['5.2'] and st.session_state['chatGPT_callback'] ):  
     st.header ('수고하셨습니다.')     
     st.header ('적절한 하위 부분들을 나누어 작성하고, 텍스트를 취합합니다.')  

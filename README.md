@@ -2,6 +2,11 @@
 
 파일은 두개 (chatGPT-API.ipynb , front-chatGPT-API.py)
 
+설치파일
+```python
+pip install -r requirements.txt
+```
+
 공통 설치 파일
 pip install openai
 pip install requests
@@ -16,4 +21,6 @@ pip install requests
 - 실행방법
   - streamlit run front-chatGPT-API.py
   
- 
+ 3. proposal.py
+ - 실행방법
+  - streamlit run proposal.py
