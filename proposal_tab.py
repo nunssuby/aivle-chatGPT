@@ -120,41 +120,8 @@ with tab1:
         print("1.1 and chatGPT_callback : " ) 
         st.write('위 내용 중에 어려운 내용은 별도로 chatGPT에게 물어보면서 알아두세요')
 
-       
-
-
-        
     
-        
-        st.header ('4. 항목별로 자세하게 작성해 달라고 요청합니다') 
-        st.text('하위 항목에 대해 자세하게 작성해다라고 요청합니다. ')
-        st.text('구체적인 내용을 질문하거나, 재작성을 요청합니다.')
-        st.text('요약하라고 요청합니다.')
-        st.write('예시) ')
-        st.text("다음을 작성해줘 \n 4. 사업 관리 부문 \n\t a. 프로젝트 수행 방법론 \n\t b. 프로젝트 관리 방안 \n\t c. 품질 관리 계획")
-        st.session_state['4.1'] = st.text_area(label="하위 항목을 자세하게 해달라고 요청합니다.예시참고 ")
 
-    
-        st.header ('5. 가이드라인 제시') 
-        st.text('필요하면, ChatGPT에게 지식을 전달합니다.')
-        st.text('중간 중간 요약하거나 리마인드 합니다. (대화가 길어지면 가끔 삼천포)')
-
-        st.write('예시) ')
-        st.text('사업 관리 부문 의 품질 관리 계획 부분에서 테스트 주도 개발(TDD) 방식을 적용하여 품질 관리를 강화한다고 언급을 했는데, \n 테스트 주도 개발(TDD) 방식이 어떻게 품질 관리를 강화에 도움이 되는지에대한 설명을 추가해서 품질 관리 계획 부분만 다시 작성해줘.')
-        st.session_state['5.1'] = st.text_area(label="위 예시를 참고하여 질문하세요. ")
-
-    # whenInputRequestChatGPT(st.session_state['5.1'])
-    requestChatGPT('5.1')
-    if(st.session_state['5.1'] and st.session_state['5.1_callback'] ):  
-        st.write('예시) ')
-        st.text('TDD 방식을 적용하기 위해 프로젝트 초기 단계에서 각 기능의 정확한 요구사항을 정의하기 위한 구체적인 활동을 3가지 나열하고, 이 활동을 추가해서 사업 관리 부문을 다시 작성해줘')
-        st.session_state['5.2'] = st.text_area(label="위 예시를 참고하여 추가 질문하세요. ")
-
-    # whenInputRequestChatGPT(st.session_state['5.2'])
-    requestChatGPT('5.2')
-    if(st.session_state['5.2'] and st.session_state['5.2_callback'] ):  
-        st.header ('수고하셨습니다.')     
-        st.header ('적절한 하위 부분들을 나누어 작성하고, 텍스트를 취합합니다.')  
 with tab2:
     st.header ('2. 원하는 것이 무엇인지 설명합니다')
     st.text('원하는 것이 무엇인지(특히, 강조할 부분을) 명시 합니다. ')
@@ -189,9 +156,37 @@ with tab3:
     requestChatGPT('3.3')
     # if(st.session_state['3.3'] and st.session_state['3.3_callback'] ):    
 with tab4:
+    st.header ('4. 항목별로 자세하게 작성해 달라고 요청합니다') 
+    st.text('하위 항목에 대해 자세하게 작성해다라고 요청합니다. ')
+    st.text('구체적인 내용을 질문하거나, 재작성을 요청합니다.')
+    st.text('요약하라고 요청합니다.')
+    st.write('예시) ')
+    st.text("다음을 작성해줘 \n 4. 사업 관리 부문 \n\t a. 프로젝트 수행 방법론 \n\t b. 프로젝트 관리 방안 \n\t c. 품질 관리 계획")
+    st.session_state['4.1'] = st.text_area(label="하위 항목을 자세하게 해달라고 요청합니다.예시참고 ")
     requestChatGPT('4.1')
     if(st.session_state['4.1'] and st.session_state['4.1_callback'] ):      
         st.session_state['4.2'] = st.text_input(label="예) '4. 사업 관리' 부문의 '3. 품질 관리 계획' 부분을 요약하고, 모든 문장들이 명사로 끝나도록, 예를 들어 ~함, ~임 이런식의 문장이 되도록 다시 작성해줘.")    
 
     requestChatGPT('4.2')
-    if(st.session_state['4.2'] and st.session_state['4.2_callback'] ):  
+    # if(st.session_state['4.2'] and st.session_state['4.2_callback'] ):  
+with tab5:
+    st.header ('5. 가이드라인 제시') 
+    st.text('필요하면, ChatGPT에게 지식을 전달합니다.')
+    st.text('중간 중간 요약하거나 리마인드 합니다. (대화가 길어지면 가끔 삼천포)')
+
+    st.write('예시) ')
+    st.text('사업 관리 부문 의 품질 관리 계획 부분에서 테스트 주도 개발(TDD) 방식을 적용하여 품질 관리를 강화한다고 언급을 했는데, \n 테스트 주도 개발(TDD) 방식이 어떻게 품질 관리를 강화에 도움이 되는지에대한 설명을 추가해서 품질 관리 계획 부분만 다시 작성해줘.')
+    st.session_state['5.1'] = st.text_area(label="위 예시를 참고하여 질문하세요. ")
+
+    # whenInputRequestChatGPT(st.session_state['5.1'])
+    requestChatGPT('5.1')
+    if(st.session_state['5.1'] and st.session_state['5.1_callback'] ):  
+        st.write('예시) ')
+        st.text('TDD 방식을 적용하기 위해 프로젝트 초기 단계에서 각 기능의 정확한 요구사항을 정의하기 위한 구체적인 활동을 3가지 나열하고, 이 활동을 추가해서 사업 관리 부문을 다시 작성해줘')
+        st.session_state['5.2'] = st.text_area(label="위 예시를 참고하여 추가 질문하세요. ")
+
+    # whenInputRequestChatGPT(st.session_state['5.2'])
+    requestChatGPT('5.2')
+    if(st.session_state['5.2'] and st.session_state['5.2_callback'] ):  
+        st.header ('수고하셨습니다.')     
+        st.header ('적절한 하위 부분들을 나누어 작성하고, 각 단계별 텍스트를 취합합니다.')  
