@@ -5,7 +5,7 @@ import openai
 import datetime
 
 # tab1, tab2, tab3 = st.tabs(["오늘점심뭐먹을까?", "어디로여행갈까?", "오늘의주가는?"])
-tab1, tab2, tab3, tab4 = st.tabs(["streamlit꾸미기", "chatGPT연동하기(API)", "내가원하는API연동하기","오늘점심뭐먹을까?"])
+tab1, tab2, tab3, tab4 = st.tabs(["streamlit꾸미기", "chatGPT연동하기(API)", "내가원하는API연동하기 [공공데이터API]","비즈니스 창출 [오늘점심뭐먹을까?]"])
 
 with tab1:
     '''
@@ -55,7 +55,7 @@ with tab3:
     공공데이터를 사용해도 되고, chatGPT의 채팅 외 다른 API를 사용해도 된다.
     본인이 개발할 비즈니스에 맞춰서 추가해본다.
     '''
-    st.title('내가원하는API연동하기')
+    st.title('내가원하는API연동하기 [공공데이터API]')
     st.header('공공데이터 날씨API 연동')
     x = st.text_input("위도(x)를 넣으세요")
     y = st.text_input("경도(x)를 넣으세요")
@@ -95,7 +95,7 @@ with tab4:
     tab1 ~tab3 까지 준비된 자원들을 가지고 새로운 비즈니스를 창출한다.
     아래는 예시로 제공된다.
     '''
-    st.title('오늘점심뭐먹을까?')
+    st.title('비즈니스 창출 [오늘점심뭐먹을까?]')
     x = st.text_input(label="위도(x)를 넣으세요", key='x')
     y = st.text_input(label="경도(x)를 넣으세요", key='y')
 
