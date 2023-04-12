@@ -30,6 +30,9 @@ with tab2:
     chatGPT API를 통해 응답을 받고
     응답을 화면에 출력한다.
     '''
+    #제목
+    st.title('chatGPT연동하기(API)')
+    
     # 채팅을 위한 text를 입력 받는다.
     contet = st.text_input("chatGPT에게 요청할 내용을 입력하세요")
     #chatGPT를 연동해본다.
@@ -92,7 +95,7 @@ with tab4:
     tab1 ~tab3 까지 준비된 자원들을 가지고 새로운 비즈니스를 창출한다.
     아래는 예시로 제공된다.
     '''
-    st.title('chatGPT API활용')
+    st.title('오늘점심뭐먹을까?')
     x = st.text_input(label="위도(x)를 넣으세요", key='x')
     y = st.text_input(label="경도(x)를 넣으세요", key='y')
 
