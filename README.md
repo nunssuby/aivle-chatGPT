@@ -7,10 +7,11 @@
 pip install -r requirements.txt
 ```
 
-공통 설치 파일
+공통 설치 파일 : 위 명령어가 잘  수행된 경우 실행하지 않아도 됨
+```python
 pip install openai
 pip install requests
-
+```
 1. chatGPT-API.ipynb
 - 주피터노트북으로 실행
 - 실행해보면 날씨를 받아온 input를 활용해서 chatGTP에게 요청

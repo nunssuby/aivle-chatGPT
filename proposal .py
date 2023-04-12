@@ -90,6 +90,7 @@ def requestChatGPT(session_state_no):
         print("성공했을 경우 chatGPTRequestCount  : ",st.session_state['chatGPTRequestCount'])
         st.subheader(f'chatGPT의 응답: \r\n {chatGPTResponse(content, session_state_no)}')        
 
+
 #질문을 받아서 넣은 후 GPT3에게 답변을 받아서 출력
 st.title('chatGPT 제안서 작성')
 # st.code(body='a + ar + ar^2 + ar^3',language='python')

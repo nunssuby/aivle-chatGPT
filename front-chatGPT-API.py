@@ -4,7 +4,6 @@ import os
 import openai
 import datetime
 
-# tab1, tab2, tab3 = st.tabs(["오늘점심뭐먹을까?", "어디로여행갈까?", "오늘의주가는?"])
 tab1, tab2, tab3, tab4 = st.tabs(["streamlit꾸미기", "chatGPT연동하기(API)", "내가원하는API연동하기 [공공데이터API]","비즈니스 창출 [오늘점심뭐먹을까?]"])
 
 with tab1:
