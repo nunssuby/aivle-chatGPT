@@ -4,6 +4,7 @@ import os
 import openai
 import datetime
 
+st.set_page_config(layout="wide")
 tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["개요","streamlit꾸미기", "chatGPT text대화하기 with 인증","chatGTP image생성하기", "공공데이터API 연동하기","비즈니스 예제 [오늘점심뭐먹을까?]","여러분의 상상력 with 배포"])
 
 with tab0:
@@ -180,9 +181,6 @@ with tab5:
         if st.button(label ='클릭하여 chatGPT에게 위 내용을 요청',key='chatGPTButton'):
             # print("chatGPTButton button content: ", st.session_state['content'])
             #chatGPT에게 요청
-            #인증 후
-            openai.api_key = "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"
-            #요청
             completion = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": st.session_state['content']}]
