@@ -22,6 +22,6 @@ pip install requests
 - 실행방법
   - streamlit run front-chatGPT-API.py
   
- 3. proposal.py
+ 3. proposal_tab.py
  - 실행방법
   - streamlit run proposal.py
