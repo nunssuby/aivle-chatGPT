@@ -10,9 +10,6 @@ load_dotenv()
 
 openai.api_key = "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"
 
-example_destinations = ['Paris', 'London', 'New York', 'Tokyo', 'Sydney', 'Hong Kong', 'Singapore', 'Warsaw', 'Mexico City', 'Palermo']
-random_destination = random.choice(example_destinations)
-
 now_date = datetime.now()
 
 # round to nearest 15 minutes
@@ -22,18 +19,15 @@ now_date = now_date.replace(minute=now_date.minute // 15 * 15, second=0, microse
 now_time = now_date.time()
 now_date = now_date.date() + timedelta(days=1)
 
-def generate_prompt(destination, arrival_to, arrival_date, arrival_time, departure_from, departure_date, departure_time, additional_information, **kwargs):
+def generate_prompt(destination="", arrival_to="", arrival_date="", arrival_time="", departure_from="", departure_date="", departure_time="", additional_information="", **kwargs):
     return f'''
 Prepare trip schedule for {destination}, based on the following information:
-
 * Arrival To: {arrival_to}
 * Arrival Date: {arrival_date}
 * Arrival Time: {arrival_time}
-
 * Departure From: {departure_from}
 * Departure Date: {departure_date}
 * Departure Time: {departure_time}
-
 * Additional Notes: {additional_information}
 '''.strip()
 
@@ -45,7 +39,7 @@ def submit():
     output = openai.Completion.create(
         engine='text-davinci-003',
         prompt=prompt,
-        temperature=0.45,
+        temperature=0.5,
         top_p=1,
         frequency_penalty=2,
         presence_penalty=0,
@@ -58,15 +52,17 @@ def submit():
 if 'output' not in st.session_state:
     st.session_state['output'] = '--'
 
-st.title('GPT-3 Trip Scheduler')
-st.subheader('Let us plan your trip!')
+st.title('GPT-3 맞춤형 여행 플래너')
+st.subheader('당신의 상황에 맞게 여행 일정을 추천해주는 GPT-3 기반 맞춤형 여행 플래너입니다')
 
 with st.form(key='trip_form'):
     c1, c2, c3 = st.columns(3)
 
     with c1:
         st.subheader('Destination')
-        origin = st.text_input('Destination', value=random_destination, key='destination')
+        example_destinations = ['Paris', 'London', 'New York', 'Tokyo', 'Sydney', 'Hong Kong', 'Singapore', 'Seoul', 'Busan', 'Jeju']
+        # 사용자가 도시를 직접 선택하도록 변경합니다.
+        destination = st.selectbox('도시 선택', example_destinations)
         st.form_submit_button('Submit', on_click=submit)
 
     with c2:
