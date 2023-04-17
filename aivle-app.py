@@ -8,6 +8,7 @@ import random
 import folium
 import datetime
 from streamlit_folium import folium_static
+import base64
 
 # API 인증
 openai.api_key = "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"
@@ -50,10 +51,10 @@ elif page == "ChatGPT Text 대화하기":
             completion = openai.Completion.create(
                 engine="davinci",
                 prompt=content,
-                max_tokens=1024,
+                max_tokens=1024, 
                 n=1,
                 stop=None,
-                temperature=0.7,
+                temperature=2,
             )
             message = completion.choices[0].text.strip()
         
@@ -152,7 +153,7 @@ elif page == "AI 기반 제안서 작성":
     st.write("OpenAI의 ChatGPT를 이용하여 자연어 처리를 기반으로 한 제안서 작성을 도와줍니다.")
 
     # Streamlit 앱
-    st.write("원하는 정보를 입력하고 자기소개서를 작성하세요.")
+    st.write("원하는 정보를 입력하고 제안서를 작성하세요.")
 
     # 제목, 회사명, 제안서의 내용 등 필요한 정보를 입력받는 창을 만듭니다.
     project_title = st.text_input("프로젝트 제목을 입력하세요.")
@@ -160,7 +161,7 @@ elif page == "AI 기반 제안서 작성":
     project_summary = st.text_area("프로젝트 요약을 입력하세요.", height=200)
     project_description = st.text_area("프로젝트 설명을 입력하세요.", height=200)
 
-    # 입력받은 정보를 OpenAI API를 활용해 제안서의 내용을 생성합니다.
+    # ChatGPT에게 제안서 작성 요청
     if st.button("ChatGPT 제안서 작성 요청"):
         with st.spinner("제안서 작성 중입니다. 잠시만 기다려주세요..."):
             prompt = (f"제목: {project_title}\n"
@@ -181,7 +182,32 @@ elif page == "AI 기반 제안서 작성":
 
         # 제안서 내용을 출력합니다.
         st.subheader("제안서 내용")
-        st.write(proposal)     
+        proposal_lines = proposal.split("\n")
+        for line in proposal_lines:
+            st.write(line)
+
+        # 제안서 작성 결과를 개괄식으로 보여주기 위해 출력하는 내용을 저장합니다.
+        result = f"프로젝트 제목: {project_title}\n"\
+                f"회사명: {company_name}\n"\
+                f"프로젝트 요약: {project_summary}\n"\
+                f"프로젝트 설명: {project_description}\n"\
+                "제안서 내용:\n\n"\
+                f"{proposal}"
+
+        # 개괄적인 제안서 작성 결과를 출력합니다.
+        st.subheader("제안서 작성 결과 개괄")
+        st.write(result)
+
+        def create_download_link(string, title="Download Text File", filename="file.txt"):
+            """Create a download link for a given string."""
+            b64 = base64.b64encode(string.encode()).decode()
+            href = f'<a href="data:application/octet-stream;base64,{b64}" download="{filename}">{title}</a>'
+            return href
+
+        # 제안서 결과를 파일로 다운로드 받을 수 있는 버튼을 추가합니다.
+        file_name = f"{project_title} 제안서.txt"
+        file_download_link = create_download_link(result, file_name)
+        st.markdown(file_download_link, unsafe_allow_html=True)
 
 # AI 기반 자기소개서 작성 서비스(text 생성 응용)
 elif page == "AI 기반 자기소개서 작성":
@@ -212,7 +238,7 @@ elif page == "AI 기반 자기소개서 작성":
         response = openai.Completion.create(
             engine="text-davinci-002",
             prompt=prompt,
-            temperature=0.7,
+            temperature=0.9,
             max_tokens=1024,
             n = 2,
             stop=None,
@@ -287,4 +313,3 @@ elif page == "공공데이터 API 연동":
 elif page == "공공데이터 API 연동-음식 추천":
     st.title('공공데이터 API 연동-음식 추천')
     st.write('API 연동하여 날씨 데이터 가져와서 날씨 기반 음식 추천합니다(텍스트와 이미지)')
-
