@@ -13,7 +13,7 @@ from streamlit_folium import folium_static
 openai.api_key = "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"
 
 # 탭 생성
-tabs = ["Home","streamlit", "ChatGPT Text 대화하기", "ChatGPT Image 생성하기", "AI 기반 추천 시스템", "AI 기반 제안서 작성", "AI 기반 자기소개서 작성", "공공데이터 API 연동", "TEST"]
+tabs = ["Home","streamlit", "ChatGPT Text 대화하기", "ChatGPT Image 생성하기", "AI 기반 추천 시스템", "AI 기반 제안서 작성", "AI 기반 자기소개서 작성", "공공데이터 API 연동", "공공데이터 API 연동-음식 추천"]
 
 # 사이드바 생성
 st.sidebar.title("Navigation")
@@ -226,45 +226,6 @@ elif page == "공공데이터 API 연동":
     st.title('공공데이터 API 연동')
     st.write('API 연동하여 날씨 데이터 가져오기')
 
-    # 사용자로부터 위도/경도를 입력 받습니다.
-    lat = st.number_input("위도 입력", value=37.5665, format="%.6f")
-    lng = st.number_input("경도 입력", value=126.9780, format="%.6f")
-
-    # Folium을 사용하여 지도를 생성합니다.
-    m = folium.Map(location=[lat, lng], zoom_start=13)
-
-    # 생성된 지도를 Streamlit으로 출력합니다.
-    folium_static(m)
-
-    # 공공 API에 요청하여 현재의 날씨 정보를 받아와서 get_sky_status_kor 함수를 이용하여 변환한 값을 출력합니다. 
-    # 출력된 값은 해당 지역의 오늘 날씨 정보입니다.
-  
-    # 공공 API 호출을 위한 변수 설정
-    service_key = "KQiiox%2BS6qJOu%2Bp3Jln5Mda5K49tPCEutxIU6ieMdfhF6gpk3eW0rHFy4P8sp9pK3QkL4QhYYh6nauczDqw7OA%3D%3D"
-    url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
-    params = {
-        "serviceKey": service_key,
-        "base_date": datetime.datetime.now().strftime('%Y%m%d'),
-        "base_time": datetime.datetime.now().strftime('%H%M'),
-        "nx": int((lng - 126.0) / 0.01),
-        "ny": int((lat - 37.0) / 0.01),
-        "dataType": "JSON"
-    }
-
-    # requests 모듈을 이용하여 API 호출
-    response = requests.get(url, params=params)
-    if response.status_code != 200:
-        st.error(f"API 호출에 실패하였습니다. 에러코드: {response.status_code}")
-    else:
-        # JSON 형식의 API 응답을 파싱하여 처리합니다.
-        json_data = response.json()
-        sky_value = json_data['response']['body']['items']['item'][6]['fcstValue']
-        st.write(f"현재 구름 상태: {get_sky_status_kor(int(sky_value))}")
-
-
-elif page == "TEST":
-    st.title('TEST')
-    st.write('TEST')
     def get_weather(lat, lng):
         # 공공 API 호출을 위한 변수 설정
         service_key = "KQiiox%2BS6qJOu%2Bp3Jln5Mda5K49tPCEutxIU6ieMdfhF6gpk3eW0rHFy4P8sp9pK3QkL4QhYYh6nauczDqw7OA%3D%3D"
@@ -285,16 +246,15 @@ elif page == "TEST":
         else:
             # JSON 형식의 API 응답을 파싱하여 처리합니다.
             json_data = response.json()
-            sky_value = json_data['response']['body']['items']['item'][6]['fcstValue']
-            return get_sky_status_kor(int(sky_value))
-    
-    def get_sky_status(data):
-            item_list = data['response']['body']['items']['item']
-            for item in item_list:
-                if item['fcstTime'] == '1200' and item['category'] == 'SKY' :
-                    selected_item = item
+            sky_value = None
+            for item in json_data['response']['body']['items']['item']:
+                if item['fcstTime'] == '1200' and item['category'] == 'SKY':
+                    sky_value = item['fcstValue']
                     break
-            return selected_item['fcstValue']
+            if sky_value is None:
+                st.error("해당 날짜/시간에 대한 데이터가 없습니다.")
+            else:
+                return get_sky_status_kor(int(sky_value))
 
     def get_sky_status_kor(sky_code):
         if sky_code == 1:
@@ -306,9 +266,6 @@ elif page == "TEST":
         else:
             return '알 수 없음'
 
-    st.title('공공데이터 API 연동')
-    st.write('API 연동하여 날씨 데이터 가져오기')
-
     # 사용자로부터 위도/경도를 입력 받습니다.
     lat = st.number_input("위도 입력", value=37.5665, format="%.6f")
     lng = st.number_input("경도 입력", value=126.9780, format="%.6f")
@@ -316,12 +273,18 @@ elif page == "TEST":
     # Folium을 사용하여 지도를 생성합니다.
     m = folium.Map(location=[lat, lng], zoom_start=13)
 
+    # 생성된 지도에 마커를 추가합니다.
+    folium.Marker(location=[lat, lng], popup='현재 위치', icon=folium.Icon(color='red')).add_to(m)
+
+    # get_weather 함수를 사용하여 날씨 정보를 가져옵니다.
+    weather = get_weather(lat, lng)
+    if weather is not None:
+        st.write(f'현재 날씨: {weather}')
+
     # 생성된 지도를 Streamlit으로 출력합니다.
     folium_static(m)
 
-    # 날씨 정보를 가져와 출력합니다.
-    weather = get_weather(lat, lng)
-    if weather:
-        st.write(f"현재 구름 상태: {weather}")
-
+elif page == "공공데이터 API 연동-음식 추천":
+    st.title('공공데이터 API 연동-음식 추천')
+    st.write('API 연동하여 날씨 데이터 가져와서 날씨 기반 음식 추천합니다(텍스트와 이미지)')
 
